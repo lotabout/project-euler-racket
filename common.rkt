@@ -10,3 +10,13 @@
 		       #:when (vector-ref primes n))
 	      n)))
 (provide sieve)
+
+;;; 1234 => (1 2 3 4)
+(define (num->digits num)
+  (let rec ([num num] [digits '()])
+    (if (= num 0)
+	digits
+	(let-values ([(q r) (quotient/remainder num 10)])
+	  (rec q (cons r digits))))))
+
+(provide num->digits)
