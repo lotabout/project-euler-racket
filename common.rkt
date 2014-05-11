@@ -20,3 +20,27 @@
 	  (rec q (cons r digits))))))
 
 (provide num->digits)
+
+;;; (1 1 1 2 3 3) => ((1 1 1) (2) (3 3))
+(define (group lst)
+  (let loop ([l lst] [ret '()])
+    (if (null? l)
+	(reverse ret)
+	(let-values ([(first rest) (partition (lambda (x) (= x (car l))) l)])
+	  (loop rest (cons first ret))))))
+(provide group)
+
+(define (get-prime-factors n)
+  (define primes (sieve n))
+  (define (rec n primes ret )
+    (if (= n 1) 
+	(reverse ret)
+	(let*-values ([(p) (car primes)]
+		      [(q r) (quotient/remainder n p)])
+	  (if (zero? r)
+	      (rec q primes (cons p ret))
+	      (rec n (cdr primes) ret)
+	      ))))
+  (rec n primes '()))
+
+(provide get-prime-factors)

@@ -1,6 +1,6 @@
 #lang racket
 
-(require "common.rkt")
+(require  (only-in "common.rkt" sieve))
 
 ;;; (1 1 1 2 3 3) => ((1 1 1) (2) (3 3))
 (define (group lst)
