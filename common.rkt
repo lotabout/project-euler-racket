@@ -21,6 +21,13 @@
 
 (provide num->digits)
 
+(define (digits->num digits)
+  (let rec ([cur 0] [digits digits])
+    (if (null? digits)
+	cur
+	(rec (+ (* cur 10) (car digits)) (cdr digits)))))
+(provide digits->num)
+
 ;;; (1 1 1 2 3 3) => ((1 1 1) (2) (3 3))
 (define (group lst)
   (let loop ([l lst] [ret '()])
@@ -44,3 +51,16 @@
   (rec n primes '()))
 
 (provide get-prime-factors)
+
+;;; test if a number is prime
+(define (prime? n)
+  (define limit (integer-sqrt n))
+  (if (< n 2)
+      #f
+      (let loop ([i 2])
+	(cond
+	 [(> i limit) #t]
+	 [(zero? (remainder n i)) #f]
+	 [else (loop (add1 i))]))))
+
+(provide prime?)
