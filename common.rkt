@@ -64,3 +64,17 @@
 	 [else (loop (add1 i))]))))
 
 (provide prime?)
+
+
+;;; find the max item and return (max max-index)
+(define (find-max list less)
+  (if (null? list) (values '() #f)
+      (let loop ([cur (cdr list)]
+		 [indx 1]
+		 [max (car list)]
+		 [max-indx 0])
+	(cond
+	 [(null? cur) (values max max-indx)]
+	 [(less max (car cur)) (loop (cdr cur) (add1 indx) (car cur) indx)]
+	 [else (loop (cdr cur) (add1 indx) max max-indx)]))))
+(provide find-max)
